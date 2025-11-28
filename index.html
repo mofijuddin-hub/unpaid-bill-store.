@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>BABI BAHI CYCLE STORE — Unpaid Bills</title>
+
+  <!-- Main Styles -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Boxicons icon set -->
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+</head>
+
+<body>
+  <!-- HEADER -->
+  <header class="app-header">
+  
+
+    <div class="brand">
+      <img src="loggo.jpeg" alt="Shop Logo" class="logo"
+           onerror="this.closest('.brand').classList.add('no-logo')">
+
+      <div>
+        <h1>BABI BAHI CYCLE STORE</h1>
+        <div class="meta">
+          Owner: MD Hasen Ali • Location: Rajapukhuri Bagicha, Darrang, Assam
+      
+</div>
+</div>
+    <div class="owner-contact"> Owner Mobile:
+      <strong id="ownerMobileDisplay">+91-9577340596</strong>
+    </div> 
+   </div>
+    <button id="darkModeToggle" >🌙</button>
+          
+  </header>
+
+  <!-- MAIN -->
+  <main class="container">
+
+    <!-- FORM CARD -->
+    <section class="card form-card">
+      <h2>Add / Customize Bill</h2>
+
+      <form id="billForm" autocomplete="off">
+        
+        <div class="row">
+          <label for="customerName">Customer Name</label>
+          <input id="customerName" name="customerName" type="text" required>
+        </div>
+
+        <div class="row">
+          <label for="customerLocation">Customer Location</label>
+          <input id="customerLocation" name="customerLocation" type="text" required>
+        </div>
+
+        <div class="row small">
+          <div>
+            <label for="customerMobile">Customer Mobile</label>
+            <input id="customerMobile" name="customerMobile"
+                   type="tel" inputmode="tel" placeholder="+91xxxxxxxxxx" required>
+          </div>
+
+          <div>
+            <label for="dateTime">Date & Time</label>
+            <input id="dateTime" name="dateTime" type="datetime-local">
+          </div>
+        </div>
+
+        <div class="row">
+          <label for="product">Product / Item</label>
+          <input id="product" name="product" type="text" required>
+        </div>
+
+        <div class="row small">
+          <div>
+            <label for="amount">Amount (₹)</label>
+            <input id="amount" name="amount"
+                   type="number" min="0" step="0.01" required>
+          </div>
+
+          <div>
+            <label for="gst">GST %</label>
+            <input id="gst" name="gst"
+                   type="number" min="0" value="0" step="0.1">
+          </div>
+        </div>
+
+        <div class="actions">
+          <button type="submit" class="btn primary">Save Bill</button>
+          <button type="button" id="saveCloudBtn" class="btn">Save to Cloud (optional)</button>
+          <button type="button" id="resetBtn" class="btn ghost">Reset</button>
+        </div>
+
+      </form>
+    </section>
+
+    <!-- BILL TABLE -->
+    <section class="card">
+      <h2>Unpaid Bill History</h2>
+
+      <div class="table-wrap">
+        <table id="billTable">
+          <thead>
+            <tr>
+              <th>Customer</th>
+              <th>Item</th>
+              <th>Amount</th>
+              <th>Date/Time</th>
+              <th>SMS</th>
+              <th>PDF</th>
+              <th>Edit</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- SMS POPUP -->
+  <div id="smsPopup" class="popup">
+    <div class="popup-card">
+      <h3>SMS Preview</h3>
+
+      <pre id="smsPreview"></pre>
+
+      <div class="actions">
+        <button type="button" id="openSmsComposer" class="btn primary">
+          Open SMS App
+        </button>
+        <button type="button" id="closeSmsBtn" class="btn ghost">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN JS -->
+  <script src="app.js"></script>
+</body>
+</html>
+
+
+  <!-- SMS Popup (simulation) -->
+  <div id="smsPopup" class="popup">
+    <div class="popup-card">
+      <h3>SMS Preview</h3>
+      <pre id="smsPreview"></pre>
+      <div class="actions">
+        <button id="openSmsComposer" class="btn primary">Open SMS App</button>
+        <button id="closeSmsBtn" class="btn ghost">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
