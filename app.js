@@ -1,5 +1,5 @@
 // ============ Configuration ============
-const OWNER_MOBILE = "+917000000000"; // <-- change to real owner mobile
+const OWNER_MOBILE = "+919577340596"; // <-- change to real owner mobile
 document.getElementById('ownerMobileDisplay').innerText = OWNER_MOBILE;
 
 // Local storage key
@@ -114,7 +114,7 @@ let lastSmsMessage = "", lastSmsRecipient = "";
 
 function buildSmsMessage(b){
   const lines = [
-    `BABI BAHI CYCLE STORE`,
+    `BHAI BHAI CYCLE STORE`,
     `Customer: ${b.name}`,
     `Item: ${b.product}`,
     `Amount Due: ₹${Number(b.amount).toFixed(2)}`,
@@ -248,3 +248,4 @@ renderBills();
     });
   Note: Android direct send requires SEND_SMS permission and user's consent.
 */
+
