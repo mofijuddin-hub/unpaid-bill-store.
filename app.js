@@ -1,5 +1,5 @@
 // ============ Configuration ============
-const OWNER_MOBILE = "+919577340596"; // <-- change to real owner mobile
+const OWNER_MOBILE = "+91-9577340596"; // <-- change to real owner mobile
 document.getElementById('ownerMobileDisplay').innerText = OWNER_MOBILE;
 
 // Local storage key
@@ -114,7 +114,7 @@ let lastSmsMessage = "", lastSmsRecipient = "";
 
 function buildSmsMessage(b){
   const lines = [
-    `BHAI BHAI CYCLE STORE`,
+    `BABI BAHI CYCLE STORE`,
     `Customer: ${b.name}`,
     `Item: ${b.product}`,
     `Amount Due: ₹${Number(b.amount).toFixed(2)}`,
@@ -248,4 +248,96 @@ renderBills();
     });
   Note: Android direct send requires SEND_SMS permission and user's consent.
 */
+ 
+
+
+
+
+// ===== LOGIN SYSTEM =====
+const LOGIN_USER = "";
+const LOGIN_PASS = "";
+
+const loginBtn = document.getElementById("loginBtn");
+const loginError = document.getElementById("loginError");
+const loginScreen = document.getElementById("loginScreen");
+const appContent = document.getElementById("appContent");
+
+loginBtn.onclick = () => {
+  const u = document.getElementById("loginUser").value;
+  const p = document.getElementById("loginPass").value;
+
+  if (u === LOGIN_USER && p === LOGIN_PASS) {
+    loginScreen.style.display = "none";
+    appContent.style.display = "block";
+  } else {
+    loginError.textContent = "Invalid username or password";
+  }
+};
+
+// Logout
+const logoutBtn = document.getElementById("logoutBtn");
+logoutBtn.onclick = () => {
+  appContent.style.display = "none";
+  loginScreen.style.display = "flex";
+};
+
+
+
+
+
+
+
+
+
+class name {
+    constructor(parameters) {
+        
+    }
+}
+
+
+    const toggle = document.getElementById("darkModeToggle");
+    toggle.addEventListener("click", () => {
+      document.body.classList.toggle("dark-mode");
+      toggle.textContent = document.body.classList.contains("dark-mode") ? "☀️" : "🌙";
+      localStorage.setItem("theme", document.body.classList.contains("dark-mode") ? "dark" : "light");
+    });
+    window.onload = () => {
+      if (localStorage.getItem("theme") === "dark") {
+        document.body.classList.add("dark-mode");
+        toggle.textContent = "☀️";
+      }
+    };
+   
+
+
+
+
+
+// Download invoice as PDF
+async function downloadPDF() {
+  const { jsPDF } = window.jspdf;
+  const invoice = document.getElementById("invoiceArea");
+
+  const canvas = await html2canvas(invoice);
+  const imgData = canvas.toDataURL("image/png");
+
+  const pdf = new jsPDF("p", "mm", "a4");
+  const width = pdf.internal.pageSize.getWidth();
+  const height = (canvas.height * width) / canvas.width;
+
+  pdf.addImage(imgData, "PNG", 0, 0, width, height);
+  pdf.save("Invoice.pdf");
+}
+
+
+
+const menuBtn = document.getElementById("menuToggle");
+const formCard = document.getElementById("billFormCard");
+
+menuBtn.addEventListener("click", () => {
+
+formCard.classList.toggle("hide");
+
+});
 
