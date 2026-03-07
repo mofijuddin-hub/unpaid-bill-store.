@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>BHAI BHAI CYCLE STORE — Unpaid Bills</title>
+  <title>BAHI BAHI CYCLE STORE — Unpaid Bills</title>
 
   <!-- Main Styles -->
   <link rel="stylesheet" href="style.css">
@@ -14,19 +14,42 @@
 </head>
 
 <body>
+    <!-- LOGIN SCREEN -->
+  <div id="loginScreen" class="login-container">
+    <h2>Owner Login</h2>
+
+    <div class="login-card">
+      <label for="loginUser">Username</label>
+      <input id="loginUser" type="text" placeholder="Enter username" required>
+
+      <label for="loginPass">Password</label>
+      <input id="loginPass" type="password" placeholder="Enter password" required>
+
+      <button id="loginBtn" class="btn primary">Login</button>
+      <p id="loginError" class="error"></p>
+    </div>
+  </div>
+
+  <!-- MAIN APP (Hidden until login) -->
+  <div id="appContent" style="display:none;">
+
+     
+      <button id="logoutBtn" class="btn ghost">Logout</button>
+ 
   <!-- HEADER -->
   <header class="app-header">
   
+
+   
 
     <div class="brand">
       <img src="loggo.jpeg" alt="Shop Logo" class="logo"
            onerror="this.closest('.brand').classList.add('no-logo')">
 
       <div>
-        <h1>BHAI BHAI CYCLE STORE</h1>
+        <h1>BAHI BAHI CYCLE STORE</h1>
         <div class="meta">
-          Owner: MD Hasen Ali • Location: Rajapukhuri Bagicha, Darrang, Assam,India
-          pin code :784190 , Near by (Chamragudam choke)
+          Owner: MD Hasen Ali • Location: Rajapukhuri Bagicha, Darrang, Assam
       
 </div>
 </div>
@@ -35,14 +58,50 @@
     </div> 
    </div>
     <button id="darkModeToggle" >🌙</button>
-          
+
+       <button id="menuToggle" class="menu-btn"><i class='bx bx-menu'></i>
+</button>
+
+
   </header>
 
   <!-- MAIN -->
   <main class="container">
 
-    <!-- FORM CARD -->
-    <section class="card form-card">
+
+
+      <!-- BILL TABLE -->
+    <section class="card">
+      <h2>Unpaid Bill History</h2>
+
+      <div class="table-wrap">
+        <table id="billTable">
+          <thead>
+            <tr>
+              <th>Customer</th>
+              <th>Item</th>
+              <th>Amount</th>
+              <th>Date/Time</th>
+              <th>SMS</th>
+              <th class=" PDF DOWNLOAD ">PDF</th>
+              <th>Edit</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+ 
+
+
+ <!-- FORM CARD -->
+<section class="card form-card" id="billFormCard">
+
+
+  
+     
       <h2>Add / Customize Bill</h2>
 
       <form id="billForm" autocomplete="off">
@@ -79,50 +138,34 @@
           <div>
             <label for="amount">Amount (₹)</label>
             <input id="amount" name="amount"
-                   type="number" min="0" step="0.01" required>
+                   
           </div>
 
           <div>
             <label for="gst">GST %</label>
             <input id="gst" name="gst"
-                   type="number" min="0" value="0" step="0.1">
+                 
           </div>
-        </div>
 
         <div class="actions">
           <button type="submit" class="btn primary">Save Bill</button>
-          <button type="button" id="saveCloudBtn" class="btn">Save to Cloud (optional)</button>
+          <button type="button" id="saveCloudBtn" class="btn ">Save to Cloud (optional)</button>
           <button type="button" id="resetBtn" class="btn ghost">Reset</button>
+         
+              </div>
+
+      
         </div>
 
-      </form>
-    </section>
+  
 
-    <!-- BILL TABLE -->
-    <section class="card">
-      <h2>Unpaid Bill History</h2>
+  <form id="billForm" autocomplete="off">
+    <!-- your form fields here (unchanged) -->
+  </form>
 
-      <div class="table-wrap">
-        <table id="billTable">
-          <thead>
-            <tr>
-              <th>Customer</th>
-              <th>Item</th>
-              <th>Amount</th>
-              <th>Date/Time</th>
-              <th>SMS</th>
-              <th>PDF</th>
-              <th>Edit</th>
-              <th>Delete</th>
-            </tr>
-          </thead>
 
-          <tbody></tbody>
-        </table>
-      </div>
-    </section>
+ </main>
 
-  </main>
 
   <!-- SMS POPUP -->
   <div id="smsPopup" class="popup">
@@ -142,26 +185,55 @@
     </div>
   </div>
 
-  <!-- MAIN JS -->
-  <script src="app.js"></script>
-</body>
-</html>
 
 
-  <!-- SMS Popup (simulation) -->
-  <div id="smsPopup" class="popup">
-    <div class="popup-card">
-      <h3>SMS Preview</h3>
-      <pre id="smsPreview"></pre>
-      <div class="actions">
-        <button id="openSmsComposer" class="btn primary">Open SMS App</button>
-        <button id="closeSmsBtn" class="btn ghost">Close</button>
-      </div>
-    </div>
+
+<button onclick="toggleInvoice()" id="toggleBtn">➕</button>
+  <!-- PDF DOWNLOAD -->
+
+
+  <div class="invoice-box" id="invoiceArea">
+  <div class="popup-card"
+    <h2>BABI BAHI CYCLE STORE</h2>
   </div>
 
-  <script src="app.js"></script>
+  <p><strong>Location:</strong> Rajapukhuri Bagicga, Darrang, Assam, India</p>
+  <p><strong>Owner:</strong>MD Hasen Ali</p><p><strong>Phon:</strong>577340596</p>
+
+  <table>
+    <tr><th>Item</th><th>Qty</th><th>Price</th></tr>
+     <tr><th>repir charg</th><th>1</th><th>50</th></tr>
+  </table>
+
+  <div class="total">Total: ₹0</div>
+
+  <div style="text-align:center; margin-top:20px;">
+    <img id="qrImage" src="" width="150" />
+  </div>
+
+
+<button class="downloadBtn" onclick="downloadPDF()">Download Invoice PDF</button>
+
+</div>
+
+<script>
+function toggleInvoice() {
+  var invoice = document.getElementById("invoiceArea");
+  var btn = document.getElementById("toggleBtn");
+
+  if (invoice.style.display === "none") {
+    invoice.style.display = "block";
+    btn.innerHTML = "Hide bill";
+  } else {
+    invoice.style.display = "none";
+    btn.innerHTML = "SHOW bill PDF ";
+  }
+}
+
+
+
+</script>
+ <script src="app.js"></script>
+ 
 </body>
-
 </html>
-
