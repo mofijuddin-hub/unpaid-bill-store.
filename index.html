@@ -4,10 +4,14 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0d6efd">
   <title>BAHI BAHI CYCLE STORE — Unpaid Bills</title>
 
   <!-- Main Styles -->
   <link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.png">
 
   <!-- Boxicons icon set -->
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
@@ -68,6 +72,23 @@
   <!-- MAIN -->
   <main class="container">
 
+
+<input type="text" id="searchInput" placeholder="Search..." onkeyup="searchBills()">
+
+<input type="date" id="filterDate" onchange="filterByDate()">
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Item</th>
+      <th>Amount</th>
+      <th>Mobile</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody id="billList"></tbody>
+</table>
 
 
       <!-- BILL TABLE -->
@@ -188,6 +209,11 @@
 
 
 
+
+
+
+
+
 <button onclick="toggleInvoice()" id="toggleBtn">➕</button>
   <!-- PDF DOWNLOAD -->
 
@@ -229,9 +255,6 @@ function toggleInvoice() {
     btn.innerHTML = "SHOW bill PDF ";
   }
 }
-
-
-
 </script>
  <script src="app.js"></script>
  
