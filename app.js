@@ -125,6 +125,9 @@ function buildSmsMessage(b){
   return lines.join("\n");
 }
 
+
+
+
 // Called when user clicks SMS button in table
 window.onSms = function(id){
   const b = bills.find(x => x.id===id);
@@ -332,12 +335,236 @@ async function downloadPDF() {
 
 
 
-const menuBtn = document.getElementById("menuToggle");
-const formCard = document.getElementById("billFormCard");
 
-menuBtn.addEventListener("click", () => {
 
-formCard.classList.toggle("hide");
 
+
+document.getElementById("addBillBtn")?.addEventListener("click", () => {
+    document.getElementById("billForm").reset();
 });
+
+document.getElementById("addBillFloatBtn")?.addEventListener("click", () => {
+    document.getElementById("billForm").reset();
+});
+
+
+
+function generatePDF(){
+
+const { jsPDF } = window.jspdf
+let doc = new jsPDF()
+
+let name = document.getElementById("customerName").value
+let phone = document.getElementById("customerPhone").value
+let address = document.getElementById("customerAddress").value
+
+let date = new Date().toLocaleString()
+
+/* ADD LOGO */
+
+let logo = new Image()
+logo.src = "logo.png"
+
+logo.onload = function(){
+
+doc.addImage(logo,'PNG',15,10,30,30)
+
+/* STORE NAME */
+
+doc.setFontSize(16)
+doc.text("BHAI BHAI CYCLE STORE",50,20)
+
+doc.setFontSize(10)
+doc.text("Guwahati, Assam",50,28)
+
+/* DATE TIME */
+
+doc.text("Date: "+date,150,20)
+
+/* CUSTOMER */
+
+doc.setFontSize(12)
+
+doc.text("Customer: "+name,20,50)
+doc.text("Phone: "+phone,20,60)
+doc.text("Address: "+address,20,70)
+
+/* ITEMS */
+
+doc.text("Items:",20,85)
+
+let table=document.getElementById("billTable")
+
+let y=95
+
+for(let i=1;i<table.rows.length;i++){
+
+let item=table.rows[i].cells[0].innerText
+let price=table.rows[i].cells[1].innerText
+let qty=table.rows[i].cells[2].innerText
+let total=table.rows[i].cells[3].innerText
+
+doc.text(item+"  ₹"+price+"  x"+qty+"  ₹"+total,20,y)
+
+y+=10
+
+}
+
+let totalAmount=document.getElementById("total").innerText
+
+doc.setFontSize(14)
+doc.text("Total: ₹"+totalAmount,20,y+10)
+
+/* SAVE */
+
+doc.save("invoice.pdf")
+
+}
+
+}
+
+
+
+const amountInput = document.getElementById("amount");
+const gstInput = document.getElementById("gst");
+const finalAmountInput = document.getElementById("finalAmount");
+
+function calculateFinal() {
+  const amount = parseFloat(amountInput.value) || 0;
+  const gst = parseFloat(gstInput.value) || 0;
+
+  const final = amount + (amount * gst / 100);
+  finalAmountInput.value = final.toFixed(2);
+}
+
+amountInput.addEventListener("input", calculateFinal);
+gstInput.addEventListener("input", calculateFinal);
+
+
+
+document.getElementById("resetBtn").onclick = () => {
+  document.getElementById("billForm").reset();
+  finalAmount.value = "";
+  editId = null;
+};
+
+
+function generatePDF(){
+
+  const { jsPDF } = window.jspdf;
+  let doc = new jsPDF();
+
+  let name = document.getElementById("customerName").value;
+  let phone = document.getElementById("customerMobile").value; // ✅ fixed
+  let address = document.getElementById("customerLocation").value; // ✅ fixed
+
+  let date = new Date().toLocaleString();
+
+  let logo = new Image();
+  logo.src = "logo.png";
+
+  logo.onload = function(){
+
+    // LOGO
+    doc.addImage(logo,'PNG',15,10,25,25);
+
+    // STORE NAME
+    doc.setFontSize(16);
+    doc.text("BHAI BHAI CYCLE STORE",50,20);
+
+    doc.setFontSize(10);
+    doc.text("Guwahati, Assam",50,28);
+
+    // DATE
+    doc.text("Date: "+date,140,20);
+
+    // CUSTOMER DETAILS
+    doc.setFontSize(12);
+    doc.text("Customer: "+name,20,50);
+    doc.text("Phone: "+phone,20,60);
+    doc.text("Address: "+address,20,70);
+
+    // TABLE HEADER
+    let y = 90;
+    doc.setFontSize(12);
+    doc.text("Item",20,y);
+    doc.text("Price",80,y);
+    doc.text("Qty",120,y);
+    doc.text("Total",160,y);
+
+    y += 10;
+
+    let table = document.getElementById("billTable");
+
+    for(let i=1;i<table.rows.length;i++){
+
+      let item = table.rows[i].cells[0].innerText;
+      let price = table.rows[i].cells[1].innerText;
+      let qty = table.rows[i].cells[2].innerText;
+      let total = table.rows[i].cells[3].innerText;
+
+      doc.text(item,20,y);
+      doc.text(price,80,y);
+      doc.text(qty,120,y);
+      doc.text(total,160,y);
+
+      y += 10;
+    }
+
+    // TOTAL + GST
+    let totalAmount = document.getElementById("total").innerText;
+    let gst = document.getElementById("gst").value || 0;
+
+    doc.setFontSize(12);
+    doc.text("GST: "+gst+"%",20,y+10);
+
+    doc.setFontSize(14);
+    doc.text("Final Total: ₹"+totalAmount,20,y+20);
+
+    // SAVE
+    doc.save("invoice.pdf");
+  };
+
+  // fallback if logo fails
+  logo.onerror = function(){
+    alert("Logo not found, generating PDF without logo...");
+    doc.text("BHAI BHAI CYCLE STORE",20,20);
+    doc.save("invoice.pdf");
+  };
+}
+
+
+
+
+
+const CACHE_NAME = "billing-app-v1";
+
+const urlsToCache = [
+  "/",
+  "/index.html",
+  "/style.css",
+  "/app.js",
+  "/logo.png"
+];
+
+self.addEventListener("install", e => {
+  e.waitUntil(
+    caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
+  );
+});
+
+self.addEventListener("fetch", e => {
+  e.respondWith(
+    caches.match(e.request).then(res => res || fetch(e.request))
+  );
+});
+
+
+
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js")
+    .then(() => console.log("PWA Ready"))
+    .catch(err => console.log(err));
+}
+
 
