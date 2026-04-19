@@ -148,7 +148,7 @@ function openNativeSmsComposer(recipient, message){
   // Use owner receiving? We open composer to send from the user's phone to owner or whichever recipient:
   // We'll open the SMS composer with recipient prefilled as OWNER_MOBILE, but you can change to recipient variable.
   // If you actually want the user to send to owner mobile, set to OWNER_MOBILE
-  const to = encodeURIComponent(OWNER_MOBILE); // send to owner
+  const to = encodeURIComponent(recipient); // ✅ send to customer
   const encodedBody = encodeURIComponent(message);
   const smsUrl = `sms:${to}${bodyParam}${encodedBody}`;
 
