@@ -1,0 +1,4540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#0d6efd">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <title>BAHI BAHI CYCLE STORE</title>
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon.png">
+
+
+
+<link
+    href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+    rel="stylesheet"
+>
+
+
+
+
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --primary: #0d6efd;
+            --primary-dark: #084298;
+            --success: #198754;
+            --danger: #dc3545;
+            --warning: #ffc107;
+            --bg: #f4f6f9;
+            --card: #ffffff;
+            --text: #212529;
+            --muted: #6c757d;
+            --border: #dee2e6;
+            --shadow: 0 4px 15px rgba(0,0,0,.08);
+        }
+
+        body.dark {
+            --bg: #121212;
+            --card: #1e1e1e;
+            --text: #f1f1f1;
+            --muted: #aaa;
+            --border: #333;
+            --shadow: 0 4px 15px rgba(0,0,0,.35);
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+
+        button,
+        input,
+        textarea,
+        select {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        /* ================= HEADER ================= */
+
+        .app-header {
+            background: linear-gradient(135deg, #0d6efd, #084298);
+            color: white;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 3px 12px rgba(0,0,0,.2);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+        }
+
+        .logo {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: white;
+            border: 2px solid white;
+        }
+
+        .brand h1 {
+            font-size: 19px;
+            margin-bottom: 3px;
+        }
+
+        .meta {
+            font-size: 11px;
+            opacity: .9;
+        }
+
+        .owner-contact {
+            font-size: 12px;
+            margin-top: 3px;
+        }
+
+        #darkModeToggle {
+            border: 0;
+            background: rgba(255,255,255,.18);
+            color: white;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            font-size: 20px;
+        }
+
+        /* ================= MAIN ================= */
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 18px;
+        }
+
+        .page {
+            display: none;
+            max-width: 1200px;
+            margin: auto;
+            padding: 18px;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .page-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .page-header h2,
+        .page-title {
+            font-size: 23px;
+        }
+
+        /* ================= CARDS ================= */
+
+        .card,
+        .bill-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 18px;
+            box-shadow: var(--shadow);
+        }
+
+        .card h3,
+        .bill-card h3 {
+            margin-bottom: 14px;
+        }
+
+        /* ================= DASHBOARD ================= */
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px;
+            box-shadow: var(--shadow);
+            transition: .2s;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .dashboard-card h4,
+        .dashboard-card h3 {
+            color: var(--muted);
+            margin-bottom: 8px;
+        }
+
+        .dashboard-card span {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* ================= FORMS ================= */
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 11px 12px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: var(--card);
+            color: var(--text);
+            margin-bottom: 12px;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(13,110,253,.12);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .grid2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        /* ================= BUTTONS ================= */
+
+        .btn {
+            border: 0;
+            padding: 10px 15px;
+            border-radius: 9px;
+            font-weight: bold;
+        }
+
+        .primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .success {
+            background: var(--success);
+            color: white;
+        }
+
+        .danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .warning {
+            background: var(--warning);
+            color: #111;
+        }
+
+        .ghost {
+            background: transparent;
+            border: 1px solid currentColor;
+        }
+
+        .small-btn {
+            padding: 6px 9px;
+            border: 0;
+            border-radius: 7px;
+            font-size: 12px;
+            margin: 2px;
+        }
+
+        /* ================= SECTION TITLE ================= */
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .section-title button {
+            border: 0;
+            background: var(--primary);
+            color: white;
+            padding: 7px 10px;
+            border-radius: 7px;
+        }
+
+        /* ================= TABLE ================= */
+
+        .table-wrap {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 650px;
+        }
+
+        th,
+        td {
+            border-bottom: 1px solid var(--border);
+            padding: 10px 8px;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        th {
+            background: rgba(13,110,253,.08);
+        }
+
+        .status-paid {
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .status-unpaid {
+            color: var(--danger);
+            font-weight: bold;
+        }
+
+        /* ================= BILL ================= */
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            padding: 8px 0;
+        }
+
+        .card-header input {
+            max-width: 250px;
+            margin: 0;
+        }
+
+        .bill-table {
+            min-width: 500px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 9px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .summary-row.total {
+            font-size: 19px;
+            border: 0;
+            padding-top: 15px;
+        }
+
+        .bill-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .save-btn,
+        .print-btn,
+        .reset-btn {
+            border: 0;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 9px;
+            font-weight: bold;
+        }
+
+        .save-btn {
+            background: var(--success);
+        }
+
+        .print-btn {
+            background: var(--primary);
+        }
+
+        .reset-btn {
+            background: var(--danger);
+        }
+
+        /* ================= FLOATING BUTTON ================= */
+
+        .floating-btn {
+            position: fixed;
+            right: 20px;
+            bottom: 80px;
+            width: 56px;
+            height: 56px;
+            border: 0;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            font-size: 25px;
+            box-shadow: 0 5px 18px rgba(0,0,0,.3);
+            z-index: 90;
+        }
+
+        /* ================= BOTTOM NAV ================= */
+
+        .bottom-tab {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 68px;
+            background: var(--card);
+            border-top: 1px solid var(--border);
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            z-index: 100;
+            box-shadow: 0 -3px 12px rgba(0,0,0,.08);
+        }
+
+        .tab {
+            border: 0;
+            background: transparent;
+            color: var(--muted);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+        }
+
+        .tab span {
+            font-size: 21px;
+        }
+
+        .tab small {
+            font-size: 11px;
+        }
+
+        .tab.active {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* ================= POPUP ================= */
+
+        .popup-overlay,
+        .popup {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            z-index: 500;
+        }
+
+        .popup-card {
+            width: min(500px, 100%);
+            max-height: 90vh;
+            overflow-y: auto;
+            background: var(--card);
+            color: var(--text);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,.3);
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 12px;
+            top: 12px;
+            border: 0;
+            background: transparent;
+            font-size: 18px;
+        }
+
+        /* ================= CUSTOMER ================= */
+
+        .customer-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .customer-actions input {
+            flex: 1;
+            margin: 0;
+        }
+
+        .customer-actions button {
+            flex-shrink: 0;
+        }
+
+        .customer-info {
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .customer-info:hover {
+            border-color: var(--primary);
+        }
+
+        /* ================= SETTINGS ================= */
+
+        .settings-list {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        .settings-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+        }
+
+        .settings-item:last-child {
+            border-bottom: 0;
+        }
+
+        .settings-item .icon {
+            font-size: 25px;
+        }
+
+        .settings-info {
+            flex: 1;
+        }
+
+        .settings-info h3 {
+            margin-bottom: 3px;
+        }
+
+        .settings-info p {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .arrow {
+            font-size: 25px;
+            color: var(--muted);
+        }
+
+        /* Switch */
+
+        .switch {
+            position: relative;
+            width: 48px;
+            height: 26px;
+            margin: 0;
+        }
+
+        .switch input {
+            display: none;
+        }
+
+        .slider {
+            position: absolute;
+            inset: 0;
+            background: #aaa;
+            border-radius: 30px;
+        }
+
+        .slider:before {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            left: 3px;
+            top: 3px;
+            background: white;
+            border-radius: 50%;
+            transition: .2s;
+        }
+
+        .switch input:checked + .slider {
+            background: var(--primary);
+        }
+
+        .switch input:checked + .slider:before {
+            transform: translateX(22px);
+        }
+
+        /* ================= INVOICE ================= */
+
+        #invoicePrintArea {
+            display: none;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 800px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .brand h1 {
+                font-size: 15px;
+            }
+
+            .meta {
+                display: none;
+            }
+        }
+
+        @media (max-width: 550px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .grid2 {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .customer-actions {
+                flex-direction: column;
+            }
+
+            .customer-actions input {
+                width: 100%;
+            }
+
+            .app-header {
+                padding: 10px;
+            }
+
+            .owner-contact {
+                display: none;
+            }
+
+            .page,
+            .container {
+                padding: 12px;
+            }
+
+            .card,
+            .bill-card {
+                padding: 14px;
+            }
+        }
+
+        /* ================= PRINT ================= */
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+
+            #invoicePrintArea,
+            #invoicePrintArea * {
+                visibility: visible;
+            }
+
+            #invoicePrintArea {
+                display: block;
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                padding: 25px;
+                color: #000;
+                background: white;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+        }
+
+
+
+
+/* =====================================================
+   LOGIN PAGE
+===================================================== */
+
+.login-page {
+    min-height: 100vh;
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0d6efd 0%,
+            #084298 50%,
+            #6610f2 100%
+        );
+
+    position: relative;
+
+    overflow-y: auto;
+}
+
+
+/* =====================================================
+   LOGIN CARD
+===================================================== */
+
+.login-card {
+
+    width: 100%;
+
+    max-width: 430px;
+
+    background: #ffffff;
+
+    border-radius: 24px;
+
+    padding: 32px 28px;
+
+    text-align: center;
+
+    box-shadow:
+        0 25px 60px
+        rgba(0, 0, 0, 0.25);
+
+    animation:
+        loginCardIn .45s ease;
+
+}
+
+
+/* =====================================================
+   CARD ANIMATION
+===================================================== */
+
+@keyframes loginCardIn {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(25px)
+            scale(.97);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+
+/* =====================================================
+   LOGO
+===================================================== */
+
+.login-logo-wrapper {
+
+    display: flex;
+
+    justify-content: center;
+
+    margin-bottom: 14px;
+
+}
+
+
+.login-logo {
+
+    width: 92px;
+
+    height: 92px;
+
+    object-fit: contain;
+
+    border-radius: 50%;
+
+    border: 4px solid #eaf2ff;
+
+    background: #fff;
+
+    padding: 5px;
+
+    box-shadow:
+        0 5px 20px
+        rgba(13, 110, 253, .18);
+
+}
+
+
+/* =====================================================
+   SHOP TITLE
+===================================================== */
+
+.login-card h1 {
+
+    margin: 0;
+
+    font-size: 29px;
+
+    font-weight: 800;
+
+    color: #0d6efd;
+
+    letter-spacing: .5px;
+
+}
+
+
+.login-card h2 {
+
+    margin: 3px 0 8px;
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+    color: #333;
+
+    letter-spacing: 1px;
+
+}
+
+
+.login-subtitle {
+
+    margin: 0 0 25px;
+
+    color: #777;
+
+    font-size: 14px;
+
+}
+
+
+/* =====================================================
+   LOGIN SECTION
+===================================================== */
+
+.login-section {
+
+    text-align: left;
+
+    margin-bottom: 18px;
+
+}
+
+
+.login-section label {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    margin-bottom: 8px;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    color: #333;
+
+}
+
+
+.login-section label i {
+
+    color: #0d6efd;
+
+    font-size: 19px;
+
+}
+
+
+/* =====================================================
+   INPUT BOX
+===================================================== */
+
+.input-box {
+
+    width: 100%;
+
+    height: 52px;
+
+    display: flex;
+
+    align-items: center;
+
+    background: #f8f9fa;
+
+    border: 1px solid #dfe3e8;
+
+    border-radius: 12px;
+
+    padding: 0 13px;
+
+    transition: .2s;
+
+}
+
+
+.input-box:focus-within {
+
+    border-color: #0d6efd;
+
+    background: #fff;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(13,110,253,.10);
+
+}
+
+
+.input-icon {
+
+    font-size: 21px;
+
+    color: #6c757d;
+
+    margin-right: 9px;
+
+}
+
+
+.input-box input {
+
+    flex: 1;
+
+    width: 100%;
+
+    height: 100%;
+
+    border: 0;
+
+    outline: 0;
+
+    background: transparent;
+
+    font-size: 16px;
+
+    color: #222;
+
+}
+
+
+.input-box input::placeholder {
+
+    color: #999;
+
+}
+
+
+/* =====================================================
+   OTP SHOW/HIDE BUTTON
+===================================================== */
+
+.input-action {
+
+    border: 0;
+
+    background: transparent;
+
+    color: #777;
+
+    cursor: pointer;
+
+    font-size: 21px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 5px;
+
+}
+
+
+/* =====================================================
+   RECAPTCHA
+===================================================== */
+
+.recaptcha-box {
+
+    margin: 12px 0;
+
+    display: flex;
+
+    justify-content: center;
+
+    overflow: hidden;
+
+}
+
+
+/* =====================================================
+   COMMON LOGIN BUTTON
+===================================================== */
+
+.login-btn {
+
+    width: 100%;
+
+    height: 52px;
+
+    border: 0;
+
+    border-radius: 12px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform .15s,
+        box-shadow .15s,
+        opacity .15s;
+
+}
+
+
+.login-btn:hover {
+
+    transform: translateY(-1px);
+
+}
+
+
+.login-btn:active {
+
+    transform: translateY(0);
+
+}
+
+
+.login-btn:disabled {
+
+    opacity: .65;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+}
+
+
+/* =====================================================
+   PHONE BUTTON
+===================================================== */
+
+.phone-btn {
+
+    background: #0d6efd;
+
+    color: #fff;
+
+    box-shadow:
+        0 5px 14px
+        rgba(13,110,253,.25);
+
+}
+
+
+.phone-btn i {
+
+    font-size: 21px;
+
+}
+
+
+/* =====================================================
+   VERIFY BUTTON
+===================================================== */
+
+.verify-btn {
+
+    margin-top: 14px;
+
+    background: #198754;
+
+    color: #fff;
+
+    box-shadow:
+        0 5px 14px
+        rgba(25,135,84,.22);
+
+}
+
+
+.verify-btn i {
+
+    font-size: 21px;
+
+}
+
+
+/* =====================================================
+   CHANGE PHONE
+===================================================== */
+
+.change-phone-btn {
+
+    width: 100%;
+
+    border: 0;
+
+    background: transparent;
+
+    color: #0d6efd;
+
+    padding: 12px;
+
+    margin-top: 4px;
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+}
+
+
+.change-phone-btn i {
+
+    font-size: 18px;
+
+    vertical-align: middle;
+
+}
+
+
+/* =====================================================
+   DIVIDER
+===================================================== */
+
+.divider {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin: 24px 0 18px;
+
+    color: #999;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    letter-spacing: .5px;
+
+}
+
+
+.divider::before,
+.divider::after {
+
+    content: "";
+
+    height: 1px;
+
+    flex: 1;
+
+    background: #e2e2e2;
+
+}
+
+
+/* =====================================================
+   GOOGLE
+===================================================== */
+
+.google-btn {
+
+    background: #fff;
+
+    color: #333;
+
+    border: 1px solid #dadce0;
+
+    margin-bottom: 12px;
+
+    box-shadow:
+        0 2px 5px
+        rgba(0,0,0,.06);
+
+}
+
+
+.google-btn:hover {
+
+    background: #f8f9fa;
+
+}
+
+
+.google-icon {
+
+    width: 24px;
+
+    height: 24px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 20px;
+
+    font-weight: 800;
+
+    color: #4285F4;
+
+}
+
+
+/* =====================================================
+   FACEBOOK
+===================================================== */
+
+.facebook-btn {
+
+    background: #1877f2;
+
+    color: #fff;
+
+    box-shadow:
+        0 5px 14px
+        rgba(24,119,242,.25);
+
+}
+
+
+.facebook-btn i {
+
+    font-size: 24px;
+
+}
+
+
+/* =====================================================
+   LOGIN MESSAGE
+===================================================== */
+
+.login-message {
+
+    min-height: 22px;
+
+    margin: 15px 0 5px;
+
+    font-size: 13px;
+
+    line-height: 1.4;
+
+}
+
+
+.login-message.success {
+
+    color: #198754;
+
+}
+
+
+.login-message.error {
+
+    color: #dc3545;
+
+}
+
+
+.login-message.loading {
+
+    color: #0d6efd;
+
+}
+
+
+/* =====================================================
+   SECURITY
+===================================================== */
+
+.login-security {
+
+    margin-top: 18px;
+
+    padding-top: 15px;
+
+    border-top: 1px solid #eee;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 6px;
+
+    color: #777;
+
+    font-size: 11px;
+
+}
+
+
+.login-security i {
+
+    color: #198754;
+
+    font-size: 17px;
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 480px) {
+
+    .login-page {
+
+        padding: 12px;
+
+        align-items: center;
+
+    }
+
+
+    .login-card {
+
+        padding: 25px 18px;
+
+        border-radius: 20px;
+
+    }
+
+
+    .login-logo {
+
+        width: 78px;
+
+        height: 78px;
+
+    }
+
+
+    .login-card h1 {
+
+        font-size: 25px;
+
+    }
+
+
+    .login-card h2 {
+
+        font-size: 16px;
+
+    }
+
+
+    .login-btn {
+
+        height: 50px;
+
+    }
+
+}
+
+
+
+
+    </style>
+</head>
+
+
+
+
+<body>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+
+
+
+
+<header class="app-header no-print">
+
+    <div class="brand">
+
+        <img
+            src="loggo.jpeg"
+            alt="Shop Logo"
+            class="logo"
+            onerror="this.style.display='none'"
+        >
+
+        <div>
+            <h1 id="headerBusinessName">
+                BAHI BAHI CYCLE STORE
+            </h1>
+
+            <div class="meta" id="headerBusinessAddress">
+                Rajapukhuri Bagicha, Darrang, Assam
+            </div>
+
+            <div class="owner-contact">
+                Owner:
+                <strong id="headerOwnerName">MD Hasen Ali</strong>
+                |
+                <strong id="headerOwnerMobile">
+                    +91-9577340596
+                </strong>
+            </div>
+        </div>
+
+    </div>
+
+    <button id="darkModeToggle" title="Dark Mode">
+        🌙
+    </button>
+
+
+
+
+
+
+
+    
+</header>
+
+
+<!-- =========================================================
+     HOME PAGE
+========================================================= -->
+
+<section id="homePage" class="page active">
+
+    <div class="page-header">
+        <h2>🏠 Home</h2>
+    </div>
+
+    <!-- Dashboard -->
+
+    <section class="dashboard-grid">
+
+        <div class="dashboard-card">
+            <h4>Total Bills</h4>
+            <span id="totalBills">0</span>
+        </div>
+
+        <div class="dashboard-card">
+            <h4>Paid Bills</h4>
+            <span id="paidBills">0</span>
+        </div>
+
+        <div class="dashboard-card">
+            <h4>Unpaid Bills</h4>
+            <span id="unpaidBills">0</span>
+        </div>
+
+        <div class="dashboard-card">
+            <h4>Total Sales</h4>
+            <span id="totalSales">₹0</span>
+        </div>
+
+    </section>
+
+
+    <!-- Search -->
+
+    <section class="card">
+
+        <h3>🔍 Search Bills</h3>
+
+        <input
+            type="text"
+            id="searchBill"
+            placeholder="Search customer, invoice or phone..."
+        >
+
+    </section>
+
+
+    <!-- Recent Bills -->
+
+    <section class="card">
+
+        <div class="section-title">
+            <h3>🧾 Recent Bills</h3>
+            <button onclick="showPage('billingPage')">
+                ➕ New Bill
+            </button>
+        </div>
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Invoice</th>
+                        <th>Customer</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="homeBillList"></tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- Unpaid -->
+
+    <section class="card">
+
+        <div class="section-title">
+
+            <h3>❌ Unpaid Bills</h3>
+
+            <button onclick="showUnpaidBills()">
+                View All
+            </button>
+
+        </div>
+
+        <div id="unpaidBillList">
+            <p>No unpaid bills.</p>
+        </div>
+
+    </section>
+
+</section>
+
+
+<!-- =========================================================
+     CUSTOMERS PAGE
+========================================================= -->
+
+<section id="customersPage" class="page">
+
+    <div class="page-header">
+
+        <h2>👥 Customers</h2>
+
+        <button
+            class="btn primary"
+            onclick="openCustomerPopup()"
+        >
+            ➕ Add Customer
+        </button>
+
+    </div>
+
+
+    <section class="card">
+
+        <input
+            type="text"
+            id="customerSearch"
+            placeholder="🔍 Search customer..."
+        >
+
+    </section>
+
+
+    <section class="card">
+
+        <h3>📋 Customer List</h3>
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Mobile</th>
+                        <th>Location</th>
+                        <th>Purchase</th>
+                        <th>Balance</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="customerTableBody"></tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <section
+        class="card"
+        id="customerProfile"
+        style="display:none;"
+    >
+
+        <h3>👤 Customer Profile</h3>
+
+        <p>
+            <strong>Name:</strong>
+            <span id="profileName">-</span>
+        </p>
+
+        <p>
+            <strong>Mobile:</strong>
+            <span id="profileMobile">-</span>
+        </p>
+
+        <p>
+            <strong>Location:</strong>
+            <span id="profileLocation">-</span>
+        </p>
+
+        <p>
+            <strong>Total Purchase:</strong>
+            ₹<span id="profilePurchase">0</span>
+        </p>
+
+        <p>
+            <strong>Total Paid:</strong>
+            ₹<span id="profilePaid">0</span>
+        </p>
+
+        <p>
+            <strong>Balance:</strong>
+            ₹<span id="profileBalance">0</span>
+        </p>
+
+    </section>
+
+
+    <section class="card">
+
+        <h3>📜 Credit History</h3>
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Invoice</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody id="creditHistory"></tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</section>
+
+
+<!-- =========================================================
+     BILLING PAGE
+========================================================= -->
+
+<section id="billingPage" class="page">
+
+    <div class="page-header">
+
+        <h2>🧾 Create Bill</h2>
+
+        <strong id="invoiceNumber">
+            INV-1001
+        </strong>
+
+    </div>
+
+
+    <!-- Invoice Information -->
+
+    <div class="bill-card">
+
+        <h3>📋 Invoice Information</h3>
+
+        <label>Date & Time</label>
+
+        <input
+            type="datetime-local"
+            id="billDate"
+        >
+
+    </div>
+
+
+    <!-- Customer -->
+
+    <div class="bill-card">
+
+        <h3>👤 Customer Details</h3>
+
+        <label>Customer Name</label>
+
+        <input
+            type="text"
+            id="customerName"
+            placeholder="Customer Name"
+        >
+
+        <label>Mobile</label>
+
+        <input
+            type="tel"
+            id="customerMobile"
+            placeholder="Mobile Number"
+        >
+
+        <label>Address</label>
+
+        <input
+            type="text"
+            id="customerAddress"
+            placeholder="Address"
+        >
+
+    </div>
+
+
+    <!-- Products -->
+
+    <div class="bill-card">
+
+        <h3>📦 Product Details</h3>
+
+        <label>Product Name</label>
+
+        <input
+            type="text"
+            id="productName"
+            placeholder="Product / Repair Service"
+        >
+
+        <div class="grid2">
+
+            <div>
+
+                <label>Quantity</label>
+
+                <input
+                    type="number"
+                    id="quantity"
+                    value="1"
+                    min="1"
+                >
+
+            </div>
+
+            <div>
+
+                <label>Price</label>
+
+                <input
+                    type="number"
+                    id="price"
+                    placeholder="Price"
+                    min="0"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="grid2">
+
+            <div>
+
+                <label>GST %</label>
+
+                <input
+                    type="number"
+                    id="gst"
+                    value="18"
+                    min="0"
+                >
+
+            </div>
+
+            <div>
+
+                <label>&nbsp;</label>
+
+                <button
+                    class="btn primary"
+                    style="width:100%;"
+                    onclick="addProduct()"
+                >
+                    ➕ Add Product
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Product Table -->
+
+    <div class="bill-card">
+
+        <h3>🛒 Products</h3>
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+
+                <tbody id="productTable"></tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- Summary -->
+
+    <div class="bill-card">
+
+        <h3>💰 Bill Summary</h3>
+
+        <div class="summary-row">
+            <span>Subtotal</span>
+            <strong id="subTotal">₹0</strong>
+        </div>
+
+        <div class="summary-row">
+            <span>GST</span>
+            <strong id="gstTotal">₹0</strong>
+        </div>
+
+        <div class="summary-row total">
+            <span>Grand Total</span>
+            <strong id="grandTotal">₹0</strong>
+        </div>
+
+    </div>
+
+
+    <!-- Payment -->
+
+    <div class="bill-card">
+
+        <h3>💳 Payment</h3>
+
+        <select id="paymentMethod">
+
+            <option value="Cash">Cash</option>
+            <option value="UPI">UPI</option>
+            <option value="Card">Card</option>
+            <option value="Due">Due</option>
+
+        </select>
+
+    </div>
+
+
+    <!-- Actions -->
+
+    <div class="bill-actions">
+
+        <button
+            class="save-btn"
+            onclick="saveBill()"
+        >
+            💾 Save Bill
+        </button>
+
+        <button
+            class="print-btn"
+            onclick="printCurrentBill()"
+        >
+            🖨 Print
+        </button>
+
+        <button
+            class="reset-btn"
+            onclick="resetBill()"
+        >
+            ↺ Reset
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     REPORTS PAGE
+========================================================= -->
+
+<section id="reportsPage" class="page">
+
+    <div class="page-header">
+        <h2>📊 Reports</h2>
+    </div>
+
+
+    <div class="dashboard-grid">
+
+        <div class="dashboard-card">
+            <h3>📅 Today</h3>
+            <span id="todaySales">₹0</span>
+        </div>
+
+        <div class="dashboard-card">
+            <h3>📆 Weekly</h3>
+            <span id="weeklySales">₹0</span>
+        </div>
+
+        <div class="dashboard-card">
+            <h3>🗓️ Monthly</h3>
+            <span id="monthlySales">₹0</span>
+        </div>
+
+        <div class="dashboard-card">
+            <h3>✅ Paid</h3>
+            <span id="paidAmount">₹0</span>
+        </div>
+
+        <div class="dashboard-card">
+            <h3>❌ Unpaid</h3>
+            <span id="unpaidAmount">₹0</span>
+        </div>
+
+        <div class="dashboard-card">
+            <h3>💰 Profit</h3>
+            <span id="profitAmount">₹0</span>
+        </div>
+
+    </div>
+
+
+    <section class="card">
+
+        <div class="section-title">
+
+            <h3>📄 Report Details</h3>
+
+            <button
+                class="btn primary"
+                onclick="exportReport()"
+            >
+                💾 Export
+            </button>
+
+        </div>
+
+        <div id="reportContainer">
+            <p>Select a report above.</p>
+        </div>
+
+    </section>
+
+</section>
+
+
+<!-- =========================================================
+     SETTINGS PAGE
+========================================================= -->
+
+<section id="settingsPage" class="page">
+
+    <div class="page-header">
+        <h2>⚙️ Settings</h2>
+    </div>
+
+
+    <section class="card">
+
+        <h3>🏪 Business Details</h3>
+
+        <label>Business Name</label>
+
+        <input
+            id="businessName"
+            type="text"
+            placeholder="Business Name"
+        >
+
+        <label>Owner Name</label>
+
+        <input
+            id="ownerName"
+            type="text"
+            placeholder="Owner Name"
+        >
+
+        <label>Mobile Number</label>
+
+        <input
+            id="ownerMobile"
+            type="tel"
+            placeholder="+91XXXXXXXXXX"
+        >
+
+        <label>Business Address</label>
+
+        <textarea
+            id="businessAddress"
+            rows="3"
+            placeholder="Business Address"
+        ></textarea>
+
+        <button
+            class="btn primary"
+            onclick="saveBusinessDetails()"
+        >
+            💾 Save Details
+        </button>
+
+    </section>
+
+
+    <section class="card">
+
+        <h3>💾 Backup & Restore</h3>
+
+        <button
+            class="btn primary"
+            onclick="backupData()"
+        >
+            📥 Backup Data
+        </button>
+
+        <button
+            class="btn success"
+            onclick="document.getElementById('restoreFile').click()"
+        >
+            📤 Restore Data
+        </button>
+
+        <input
+            type="file"
+            id="restoreFile"
+            accept=".json"
+            style="display:none"
+            onchange="restoreData(event)"
+        >
+
+    </section>
+
+
+    <section class="card">
+
+        <h3>🖨 Printer</h3>
+
+        <button
+            class="btn primary"
+            onclick="window.print()"
+        >
+            🖨 Test Print
+        </button>
+
+    </section>
+
+
+    <section class="card">
+
+        <h3>ℹ️ About</h3>
+
+        <p>
+            <strong>BAHI BAHI CYCLE STORE</strong>
+        </p>
+
+        <p>
+            Billing & Customer Management System
+        </p>
+
+        <p>
+            Version 1.0
+        </p>
+
+    </section>
+
+</section>
+
+
+<!-- =========================================================
+     ADD CUSTOMER POPUP
+========================================================= -->
+
+<div
+    id="customerPopup"
+    class="popup-overlay"
+>
+
+    <div class="popup-card">
+
+        <button
+            class="close-btn"
+            onclick="closeCustomerPopup()"
+        >
+            ✖
+        </button>
+
+        <h3>➕ Add Customer</h3>
+
+        <form id="customerForm">
+
+            <label>Customer Name</label>
+
+            <input
+                type="text"
+                id="custName"
+                required
+            >
+
+            <label>Mobile Number</label>
+
+            <input
+                type="tel"
+                id="custMobile"
+                required
+            >
+
+            <label>Location</label>
+
+            <input
+                type="text"
+                id="custLocation"
+            >
+
+            <button
+                type="submit"
+                class="btn primary"
+            >
+                Save Customer
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     SMS POPUP
+========================================================= -->
+
+<div
+    id="smsPopup"
+    class="popup"
+>
+
+    <div class="popup-card">
+
+        <h3>📱 SMS Preview</h3>
+
+        <pre
+            id="smsPreview"
+            style="
+                white-space:pre-wrap;
+                background:var(--bg);
+                padding:12px;
+                border-radius:8px;
+                margin:15px 0;
+            "
+        ></pre>
+
+        <div class="bill-actions">
+
+            <button
+                class="btn primary"
+                id="openSmsComposer"
+            >
+                📱 Open SMS App
+            </button>
+
+            <button
+                class="btn ghost"
+                onclick="closeSmsPopup()"
+            >
+                Close
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     INVOICE PRINT AREA
+========================================================= -->
+
+<div id="invoicePrintArea">
+
+    <h1
+        id="printShopName"
+        style="text-align:center;"
+    >
+        BAHI BAHI CYCLE STORE
+    </h1>
+
+    <p style="text-align:center;">
+        <span id="printAddress">
+            Rajapukhuri Bagicha, Darrang, Assam
+        </span>
+    </p>
+
+    <p style="text-align:center;">
+        Owner:
+        <span id="printOwner">
+            MD Hasen Ali
+        </span>
+        |
+        <span id="printPhone">
+            +91-9577340596
+        </span>
+    </p>
+
+    <hr>
+
+    <p>
+        <strong>Invoice:</strong>
+        <span id="printInvoice"></span>
+    </p>
+
+    <p>
+        <strong>Date:</strong>
+        <span id="printDate"></span>
+    </p>
+
+    <p>
+        <strong>Customer:</strong>
+        <span id="printCustomer"></span>
+    </p>
+
+    <p>
+        <strong>Mobile:</strong>
+        <span id="printCustomerMobile"></span>
+    </p>
+
+    <br>
+
+    <table
+        style="
+            width:100%;
+            border-collapse:collapse;
+        "
+    >
+
+        <thead>
+            <tr>
+                <th style="border:1px solid #000;padding:8px;">
+                    Item
+                </th>
+
+                <th style="border:1px solid #000;padding:8px;">
+                    Qty
+                </th>
+
+                <th style="border:1px solid #000;padding:8px;">
+                    Price
+                </th>
+
+                <th style="border:1px solid #000;padding:8px;">
+                    Total
+                </th>
+            </tr>
+        </thead>
+
+        <tbody id="printProducts"></tbody>
+
+    </table>
+
+    <br>
+
+    <div style="text-align:right;">
+
+        <p>
+            Subtotal:
+            ₹<span id="printSubtotal">0</span>
+        </p>
+
+        <p>
+            GST:
+            ₹<span id="printGST">0</span>
+        </p>
+
+        <h2>
+            Total:
+            ₹<span id="printGrandTotal">0</span>
+        </h2>
+
+        <p>
+            Payment:
+            <span id="printPayment"></span>
+        </p>
+
+    </div>
+
+    <br>
+
+    <p style="text-align:center;">
+        Thank you for visiting us!
+    </p>
+
+</div>
+
+
+<!-- =========================================================
+     BOTTOM NAVIGATION
+========================================================= -->
+
+<nav class="bottom-tab no-print">
+
+    <button
+        class="tab active"
+        onclick="showPage('homePage', this)"
+    >
+        <span>🏠</span>
+        <small>Home</small>
+    </button>
+
+    <button
+        class="tab"
+        onclick="showPage('customersPage', this)"
+    >
+        <span>👥</span>
+        <small>Customers</small>
+    </button>
+
+    <button
+        class="tab"
+        onclick="showPage('reportsPage', this)"
+    >
+        <span>📊</span>
+        <small>Reports</small>
+    </button>
+
+    <button
+        class="tab"
+        onclick="showPage('settingsPage', this)"
+    >
+        <span>⚙️</span>
+        <small>Settings</small>
+    </button>
+
+</nav>
+
+
+<!-- Floating Add Bill -->
+
+<button
+    class="floating-btn no-print"
+    onclick="showPage('billingPage')"
+    title="Create Bill"
+>
+    ➕
+</button>
+
+<script>
+
+"use strict";
+
+/* =========================================================
+   DATA
+========================================================= */
+
+let bills = JSON.parse(
+    localStorage.getItem("bahiBills") || "[]"
+);
+
+let customers = JSON.parse(
+    localStorage.getItem("bahiCustomers") || "[]"
+);
+
+let settings = JSON.parse(
+    localStorage.getItem("bahiSettings") || "{}"
+);
+
+let currentProducts = [];
+
+let editingBillId = null;
+
+
+/* =========================================================
+   DEFAULT SETTINGS
+========================================================= */
+
+const defaultSettings = {
+
+    businessName: "BAHI BAHI CYCLE STORE",
+
+    ownerName: "MD Hasen Ali",
+
+    ownerMobile: "+91-9577340596",
+
+    businessAddress:
+        "Rajapukhuri Bagicha, Darrang, Assam"
+
+};
+
+settings = {
+    ...defaultSettings,
+    ...settings
+};
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function money(value) {
+
+    return "₹" + Number(value || 0).toLocaleString(
+        "en-IN",
+        {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 2
+        }
+    );
+}
+
+
+function saveData() {
+
+    localStorage.setItem(
+        "bahiBills",
+        JSON.stringify(bills)
+    );
+
+    localStorage.setItem(
+        "bahiCustomers",
+        JSON.stringify(customers)
+    );
+
+    localStorage.setItem(
+        "bahiSettings",
+        JSON.stringify(settings)
+    );
+}
+
+
+function escapeHTML(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function showPage(pageId, button) {
+
+    document.querySelectorAll(".page").forEach(page => {
+        page.classList.remove("active");
+    });
+
+    const page = document.getElementById(pageId);
+
+    if (page) {
+        page.classList.add("active");
+    }
+
+    document.querySelectorAll(".tab").forEach(tab => {
+        tab.classList.remove("active");
+    });
+
+    if (button) {
+        button.classList.add("active");
+    }
+
+    if (pageId === "homePage") {
+        renderDashboard();
+    }
+
+    if (pageId === "customersPage") {
+        renderCustomers();
+    }
+
+    if (pageId === "reportsPage") {
+        renderReports();
+    }
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+/* =========================================================
+   INVOICE NUMBER
+========================================================= */
+
+function getNextInvoiceNumber() {
+
+    if (bills.length === 0) {
+        return "INV-1001";
+    }
+
+    let max = 1000;
+
+    bills.forEach(bill => {
+
+        const number = parseInt(
+            String(bill.invoice || "")
+                .replace(/\D/g, ""),
+            10
+        );
+
+        if (!isNaN(number)) {
+            max = Math.max(max, number);
+        }
+
+    });
+
+    return "INV-" + (max + 1);
+}
+
+
+/* =========================================================
+   BILL DATE
+========================================================= */
+
+function setBillDate() {
+
+    const input =
+        document.getElementById("billDate");
+
+    const now = new Date();
+
+    now.setMinutes(
+        now.getMinutes() -
+        now.getTimezoneOffset()
+    );
+
+    input.value =
+        now.toISOString().slice(0, 16);
+}
+
+
+/* =========================================================
+   PRODUCTS
+========================================================= */
+
+function addProduct() {
+
+    const name =
+        document.getElementById("productName")
+            .value.trim();
+
+    const qty =
+        Number(
+            document.getElementById("quantity").value
+        );
+
+    const price =
+        Number(
+            document.getElementById("price").value
+        );
+
+    const gst =
+        Number(
+            document.getElementById("gst").value
+        ) || 0;
+
+
+    if (!name) {
+        alert("Please enter product name.");
+        return;
+    }
+
+    if (qty <= 0) {
+        alert("Quantity must be greater than 0.");
+        return;
+    }
+
+    if (price < 0 || isNaN(price)) {
+        alert("Please enter a valid price.");
+        return;
+    }
+
+
+    currentProducts.push({
+
+        id: Date.now(),
+
+        name,
+
+        qty,
+
+        price,
+
+        gst
+
+    });
+
+
+    document.getElementById("productName").value = "";
+
+    document.getElementById("quantity").value = 1;
+
+    document.getElementById("price").value = "";
+
+    renderProducts();
+}
+
+
+function removeProduct(id) {
+
+    currentProducts =
+        currentProducts.filter(
+            product => product.id !== id
+        );
+
+    renderProducts();
+}
+
+
+function renderProducts() {
+
+    const tbody =
+        document.getElementById("productTable");
+
+    if (currentProducts.length === 0) {
+
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="5" style="text-align:center;">
+                    No Products Added
+                </td>
+            </tr>
+        `;
+
+        calculateBill();
+
+        return;
+    }
+
+
+    tbody.innerHTML =
+        currentProducts.map(product => {
+
+            const total =
+                product.qty * product.price;
+
+            return `
+                <tr>
+
+                    <td>
+                        ${escapeHTML(product.name)}
+                    </td>
+
+                    <td>
+                        ${product.qty}
+                    </td>
+
+                    <td>
+                        ${money(product.price)}
+                    </td>
+
+                    <td>
+                        ${money(total)}
+                    </td>
+
+                    <td>
+                        <button
+                            class="small-btn danger"
+                            onclick="removeProduct(${product.id})"
+                        >
+                            ✖
+                        </button>
+                    </td>
+
+                </tr>
+            `;
+
+        }).join("");
+
+    calculateBill();
+}
+
+
+/* =========================================================
+   BILL CALCULATION
+========================================================= */
+
+function calculateBill() {
+
+    let subtotal = 0;
+
+    let gstTotal = 0;
+
+
+    currentProducts.forEach(product => {
+
+        const itemTotal =
+            product.qty * product.price;
+
+        subtotal += itemTotal;
+
+        gstTotal +=
+            itemTotal *
+            Number(product.gst || 0) /
+            100;
+
+    });
+
+
+    const grandTotal =
+        subtotal + gstTotal;
+
+
+    document.getElementById("subTotal")
+        .textContent = money(subtotal);
+
+    document.getElementById("gstTotal")
+        .textContent = money(gstTotal);
+
+    document.getElementById("grandTotal")
+        .textContent = money(grandTotal);
+
+    return {
+        subtotal,
+        gstTotal,
+        grandTotal
+    };
+}
+
+
+/* =========================================================
+   SAVE BILL
+========================================================= */
+
+function saveBill() {
+
+    const customerName =
+        document.getElementById("customerName")
+            .value.trim();
+
+    const customerMobile =
+        document.getElementById("customerMobile")
+            .value.trim();
+
+    const customerAddress =
+        document.getElementById("customerAddress")
+            .value.trim();
+
+    const paymentMethod =
+        document.getElementById("paymentMethod")
+            .value;
+
+    const billDate =
+        document.getElementById("billDate")
+            .value;
+
+
+    if (!customerName) {
+
+        alert("Please enter customer name.");
+
+        return;
+    }
+
+
+    if (currentProducts.length === 0) {
+
+        alert("Please add at least one product.");
+
+        return;
+    }
+
+
+    const totals = calculateBill();
+
+
+    const status =
+        paymentMethod === "Due"
+            ? "Unpaid"
+            : "Paid";
+
+
+    const bill = {
+
+        id:
+            editingBillId ||
+            Date.now(),
+
+        invoice:
+            editingBillId
+                ? (
+                    bills.find(
+                        b => b.id === editingBillId
+                    )?.invoice ||
+                    getNextInvoiceNumber()
+                )
+                : getNextInvoiceNumber(),
+
+        date:
+            billDate ||
+            new Date().toISOString(),
+
+        customerName,
+
+        customerMobile,
+
+        customerAddress,
+
+        products:
+            JSON.parse(
+                JSON.stringify(currentProducts)
+            ),
+
+        subtotal:
+            totals.subtotal,
+
+        gst:
+            totals.gstTotal,
+
+        total:
+            totals.grandTotal,
+
+        paymentMethod,
+
+        status
+
+    };
+
+
+    if (editingBillId) {
+
+        const index =
+            bills.findIndex(
+                b => b.id === editingBillId
+            );
+
+        if (index !== -1) {
+            bills[index] = bill;
+        }
+
+    } else {
+
+        bills.push(bill);
+
+    }
+
+
+    /* Update customer */
+
+    let customer =
+        customers.find(c =>
+            c.mobile === customerMobile &&
+            customerMobile !== ""
+        );
+
+
+    if (!customer) {
+
+        customer = {
+
+            id: Date.now(),
+
+            name: customerName,
+
+            mobile: customerMobile,
+
+            location: customerAddress
+
+        };
+
+        customers.push(customer);
+
+    }
+
+
+    saveData();
+
+    alert(
+        `Bill ${bill.invoice} saved successfully.`
+    );
+
+
+    const shouldPrint =
+        confirm(
+            "Bill saved. Do you want to print it?"
+        );
+
+
+    if (shouldPrint) {
+        prepareInvoicePrint(bill);
+        window.print();
+    }
+
+
+    resetBill();
+
+    renderAll();
+
+    showPage("homePage");
+
+}
+
+
+/* =========================================================
+   RESET BILL
+========================================================= */
+
+function resetBill() {
+
+    editingBillId = null;
+
+    currentProducts = [];
+
+    document.getElementById("customerName").value = "";
+
+    document.getElementById("customerMobile").value = "";
+
+    document.getElementById("customerAddress").value = "";
+
+    document.getElementById("paymentMethod").value = "Cash";
+
+    document.getElementById("invoiceNumber")
+        .textContent = getNextInvoiceNumber();
+
+    setBillDate();
+
+    renderProducts();
+
+}
+
+
+/* =========================================================
+   EDIT BILL
+========================================================= */
+
+function editBill(id) {
+
+    const bill =
+        bills.find(b => b.id === id);
+
+    if (!bill) return;
+
+
+    editingBillId = id;
+
+    document.getElementById("customerName")
+        .value = bill.customerName;
+
+    document.getElementById("customerMobile")
+        .value = bill.customerMobile;
+
+    document.getElementById("customerAddress")
+        .value = bill.customerAddress;
+
+    document.getElementById("paymentMethod")
+        .value = bill.paymentMethod;
+
+    document.getElementById("billDate")
+        .value =
+        String(bill.date).slice(0, 16);
+
+    document.getElementById("invoiceNumber")
+        .textContent = bill.invoice;
+
+
+    currentProducts =
+        JSON.parse(
+            JSON.stringify(bill.products)
+        );
+
+
+    renderProducts();
+
+    showPage("billingPage");
+}
+
+
+/* =========================================================
+   DELETE BILL
+========================================================= */
+
+function deleteBill(id) {
+
+    const bill =
+        bills.find(b => b.id === id);
+
+    if (!bill) return;
+
+
+    if (
+        !confirm(
+            `Delete ${bill.invoice}?`
+        )
+    ) {
+        return;
+    }
+
+
+    bills =
+        bills.filter(
+            b => b.id !== id
+        );
+
+
+    saveData();
+
+    renderAll();
+}
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+function renderDashboard() {
+
+    const total =
+        bills.length;
+
+    const paid =
+        bills.filter(
+            b => b.status === "Paid"
+        ).length;
+
+    const unpaid =
+        bills.filter(
+            b => b.status === "Unpaid"
+        ).length;
+
+    const sales =
+        bills.reduce(
+            (sum, bill) =>
+                sum + Number(bill.total || 0),
+            0
+        );
+
+
+    document.getElementById("totalBills")
+        .textContent = total;
+
+    document.getElementById("paidBills")
+        .textContent = paid;
+
+    document.getElementById("unpaidBills")
+        .textContent = unpaid;
+
+    document.getElementById("totalSales")
+        .textContent = money(sales);
+
+
+    renderHomeBills();
+
+    renderUnpaidBills();
+}
+
+
+function renderHomeBills(list = bills) {
+
+    const tbody =
+        document.getElementById("homeBillList");
+
+    const sorted =
+        [...list]
+            .sort(
+                (a,b) =>
+                    new Date(b.date) -
+                    new Date(a.date)
+            )
+            .slice(0, 20);
+
+
+    if (sorted.length === 0) {
+
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="6"
+                    style="text-align:center;">
+                    No bills found.
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+
+    tbody.innerHTML =
+        sorted.map(bill => {
+
+            return `
+                <tr>
+
+                    <td>
+                        ${escapeHTML(bill.invoice)}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(bill.customerName)}
+                    </td>
+
+                    <td>
+                        ${money(bill.total)}
+                    </td>
+
+                    <td class="${
+                        bill.status === "Paid"
+                            ? "status-paid"
+                            : "status-unpaid"
+                    }">
+                        ${bill.status}
+                    </td>
+
+                    <td>
+                        ${formatDate(bill.date)}
+                    </td>
+
+                    <td>
+
+                        <button
+                            class="small-btn primary"
+                            onclick="editBill(${bill.id})"
+                        >
+                            Edit
+                        </button>
+
+                        <button
+                            class="small-btn"
+                            style="background:#6c757d;color:white;"
+                            onclick="sendSMS(${bill.id})"
+                        >
+                            SMS
+                        </button>
+
+                        <button
+                            class="small-btn danger"
+                            onclick="deleteBill(${bill.id})"
+                        >
+                            Delete
+                        </button>
+
+                    </td>
+
+                </tr>
+            `;
+
+        }).join("");
+}
+
+
+/* =========================================================
+   SEARCH BILLS
+========================================================= */
+
+document.getElementById("searchBill")
+    .addEventListener("input", function() {
+
+        const query =
+            this.value.toLowerCase().trim();
+
+
+        const filtered =
+            bills.filter(bill =>
+
+                String(bill.invoice)
+                    .toLowerCase()
+                    .includes(query)
+
+                ||
+
+                String(bill.customerName)
+                    .toLowerCase()
+                    .includes(query)
+
+                ||
+
+                String(bill.customerMobile)
+                    .toLowerCase()
+                    .includes(query)
+
+            );
+
+
+        renderHomeBills(filtered);
+
+    });
+
+
+/* =========================================================
+   UNPAID BILLS
+========================================================= */
+
+function renderUnpaidBills() {
+
+    const container =
+        document.getElementById(
+            "unpaidBillList"
+        );
+
+
+    const unpaid =
+        bills.filter(
+            b => b.status === "Unpaid"
+        );
+
+
+    if (unpaid.length === 0) {
+
+        container.innerHTML =
+            "<p>No unpaid bills.</p>";
+
+        return;
+    }
+
+
+    container.innerHTML =
+        unpaid.map(bill => {
+
+            return `
+                <div class="customer-info">
+
+                    <strong>
+                        ${escapeHTML(bill.customerName)}
+                    </strong>
+
+                    <br>
+
+                    Invoice:
+                    ${escapeHTML(bill.invoice)}
+
+                    <br>
+
+                    Due:
+                    <strong style="color:var(--danger);">
+                        ${money(bill.total)}
+                    </strong>
+
+                    <br>
+
+                    <button
+                        class="small-btn"
+                        style="background:#25d366;color:white;"
+                        onclick="sendSMS(${bill.id})"
+                    >
+                        📱 SMS Reminder
+                    </button>
+
+                </div>
+            `;
+
+        }).join("");
+}
+
+
+function showUnpaidBills() {
+
+    const unpaid =
+        bills.filter(
+            b => b.status === "Unpaid"
+        );
+
+    if (unpaid.length === 0) {
+        alert("No unpaid bills.");
+        return;
+    }
+
+    renderHomeBills(unpaid);
+
+    showPage("homePage");
+}
+
+
+/* =========================================================
+   CUSTOMERS
+========================================================= */
+
+function renderCustomers() {
+
+    const tbody =
+        document.getElementById(
+            "customerTableBody"
+        );
+
+    const query =
+        document.getElementById(
+            "customerSearch"
+        ).value
+            .toLowerCase()
+            .trim();
+
+
+    const filtered =
+        customers.filter(customer =>
+            customer.name
+                .toLowerCase()
+                .includes(query)
+            ||
+            String(customer.mobile)
+                .toLowerCase()
+                .includes(query)
+            ||
+            String(customer.location)
+                .toLowerCase()
+                .includes(query)
+        );
+
+
+    if (filtered.length === 0) {
+
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="6"
+                    style="text-align:center;">
+                    No customers found.
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+
+    tbody.innerHTML =
+        filtered.map(customer => {
+
+            const customerBills =
+                bills.filter(b =>
+                    b.customerMobile ===
+                    customer.mobile
+                );
+
+
+            const purchase =
+                customerBills.reduce(
+                    (sum,b) =>
+                        sum + Number(b.total || 0),
+                    0
+                );
+
+
+            const paid =
+                customerBills
+                    .filter(b => b.status === "Paid")
+                    .reduce(
+                        (sum,b) =>
+                            sum + Number(b.total || 0),
+                        0
+                    );
+
+
+            const balance =
+                purchase - paid;
+
+
+            return `
+                <tr>
+
+                    <td>
+                        ${escapeHTML(customer.name)}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(customer.mobile)}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(customer.location || "-")}
+                    </td>
+
+                    <td>
+                        ${money(purchase)}
+                    </td>
+
+                    <td style="color:${
+                        balance > 0
+                            ? "var(--danger)"
+                            : "var(--success)"
+                    };">
+                        ${money(balance)}
+                    </td>
+
+                    <td>
+
+                        <button
+                            class="small-btn primary"
+                            onclick="showCustomerProfile(${customer.id})"
+                        >
+                            View
+                        </button>
+
+                    </td>
+
+                </tr>
+            `;
+
+        }).join("");
+}
+
+
+document.getElementById("customerSearch")
+    .addEventListener("input", renderCustomers);
+
+
+/* =========================================================
+   CUSTOMER POPUP
+========================================================= */
+
+function openCustomerPopup() {
+
+    document.getElementById(
+        "customerPopup"
+    ).style.display = "flex";
+
+}
+
+
+function closeCustomerPopup() {
+
+    document.getElementById(
+        "customerPopup"
+    ).style.display = "none";
+
+}
+
+
+document.getElementById("customerForm")
+    .addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+
+        const name =
+            document.getElementById("custName")
+                .value.trim();
+
+        const mobile =
+            document.getElementById("custMobile")
+                .value.trim();
+
+        const location =
+            document.getElementById("custLocation")
+                .value.trim();
+
+
+        if (
+            customers.some(
+                c => c.mobile === mobile
+            )
+        ) {
+
+            alert(
+                "A customer with this mobile number already exists."
+            );
+
+            return;
+        }
+
+
+        customers.push({
+
+            id: Date.now(),
+
+            name,
+
+            mobile,
+
+            location
+
+        });
+
+
+        saveData();
+
+        this.reset();
+
+        closeCustomerPopup();
+
+        renderCustomers();
+
+        alert("Customer added successfully.");
+
+    });
+
+
+/* =========================================================
+   CUSTOMER PROFILE
+========================================================= */
+
+function showCustomerProfile(id) {
+
+    const customer =
+        customers.find(
+            c => c.id === id
+        );
+
+    if (!customer) return;
+
+
+    const customerBills =
+        bills.filter(
+            b =>
+                b.customerMobile ===
+                customer.mobile
+        );
+
+
+    const purchase =
+        customerBills.reduce(
+            (sum,b) =>
+                sum + Number(b.total || 0),
+            0
+        );
+
+
+    const paid =
+        customerBills
+            .filter(
+                b => b.status === "Paid"
+            )
+            .reduce(
+                (sum,b) =>
+                    sum + Number(b.total || 0),
+                0
+            );
+
+
+    const balance =
+        purchase - paid;
+
+
+    document.getElementById("profileName")
+        .textContent = customer.name;
+
+    document.getElementById("profileMobile")
+        .textContent = customer.mobile;
+
+    document.getElementById("profileLocation")
+        .textContent = customer.location || "-";
+
+    document.getElementById("profilePurchase")
+        .textContent =
+            Number(purchase).toLocaleString("en-IN");
+
+    document.getElementById("profilePaid")
+        .textContent =
+            Number(paid).toLocaleString("en-IN");
+
+    document.getElementById("profileBalance")
+        .textContent =
+            Number(balance).toLocaleString("en-IN");
+
+
+    const profile =
+        document.getElementById(
+            "customerProfile"
+        );
+
+    profile.style.display = "block";
+
+
+    renderCreditHistory(customerBills);
+
+    profile.scrollIntoView({
+        behavior: "smooth"
+    });
+
+}
+
+
+function renderCreditHistory(customerBills) {
+
+    const tbody =
+        document.getElementById(
+            "creditHistory"
+        );
+
+
+    if (customerBills.length === 0) {
+
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="4">
+                    No history.
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+
+    tbody.innerHTML =
+        customerBills.map(bill => {
+
+            return `
+                <tr>
+
+                    <td>
+                        ${formatDate(bill.date)}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(bill.invoice)}
+                    </td>
+
+                    <td>
+                        ${money(bill.total)}
+                    </td>
+
+                    <td class="${
+                        bill.status === "Paid"
+                            ? "status-paid"
+                            : "status-unpaid"
+                    }">
+                        ${bill.status}
+                    </td>
+
+                </tr>
+            `;
+
+        }).join("");
+}
+
+
+/* =========================================================
+   REPORTS
+========================================================= */
+
+function renderReports() {
+
+    const now =
+        new Date();
+
+    const today =
+        bills.filter(
+            bill =>
+                sameDay(
+                    new Date(bill.date),
+                    now
+                )
+        );
+
+
+    const week =
+        bills.filter(
+            bill =>
+                new Date(bill.date) >=
+                new Date(
+                    now.getTime() -
+                    7 * 24 * 60 * 60 * 1000
+                )
+        );
+
+
+    const month =
+        bills.filter(
+            bill => {
+
+                const d =
+                    new Date(bill.date);
+
+                return (
+                    d.getMonth() ===
+                    now.getMonth()
+                    &&
+                    d.getFullYear() ===
+                    now.getFullYear()
+                );
+
+            }
+        );
+
+
+    const paid =
+        bills.filter(
+            b => b.status === "Paid"
+        );
+
+
+    const unpaid =
+        bills.filter(
+            b => b.status === "Unpaid"
+        );
+
+
+    document.getElementById("todaySales")
+        .textContent =
+        money(sumBills(today));
+
+    document.getElementById("weeklySales")
+        .textContent =
+        money(sumBills(week));
+
+    document.getElementById("monthlySales")
+        .textContent =
+        money(sumBills(month));
+
+    document.getElementById("paidAmount")
+        .textContent =
+        money(sumBills(paid));
+
+    document.getElementById("unpaidAmount")
+        .textContent =
+        money(sumBills(unpaid));
+
+
+    /*
+       Profit is calculated here as sales because
+       no purchase/cost price is stored yet.
+    */
+
+    document.getElementById("profitAmount")
+        .textContent =
+        money(sumBills(paid));
+}
+
+
+function sumBills(list) {
+
+    return list.reduce(
+        (sum,bill) =>
+            sum + Number(bill.total || 0),
+        0
+    );
+}
+
+
+function sameDay(a,b) {
+
+    return (
+        a.getDate() === b.getDate()
+        &&
+        a.getMonth() === b.getMonth()
+        &&
+        a.getFullYear() === b.getFullYear()
+    );
+}
+
+
+function exportReport() {
+
+    const data =
+        bills.map(bill => ({
+            Invoice: bill.invoice,
+            Customer: bill.customerName,
+            Mobile: bill.customerMobile,
+            Total: bill.total,
+            Payment: bill.paymentMethod,
+            Status: bill.status,
+            Date: bill.date
+        }));
+
+
+    const blob =
+        new Blob(
+            [JSON.stringify(data,null,2)],
+            {
+                type: "application/json"
+            }
+        );
+
+
+    downloadBlob(
+        blob,
+        "bahi-bahi-report.json"
+    );
+
+}
+
+
+/* =========================================================
+   SMS
+========================================================= */
+
+let currentSmsNumber = "";
+
+
+function sendSMS(id) {
+
+    const bill =
+        bills.find(
+            b => b.id === id
+        );
+
+    if (!bill) return;
+
+
+    currentSmsNumber =
+        bill.customerMobile;
+
+
+    const message =
+`Dear ${bill.customerName},
+
+Your bill ${bill.invoice} from ${settings.businessName} has an outstanding amount of ${money(bill.total)}.
+
+Please clear your due amount at your convenience.
+
+Thank you.
+${settings.businessName}`;
+
+
+    document.getElementById("smsPreview")
+        .textContent = message;
+
+
+    document.getElementById(
+        "smsPopup"
+    ).style.display = "flex";
+
+
+    document.getElementById(
+        "openSmsComposer"
+    ).onclick = function() {
+
+        const phone =
+            currentSmsNumber
+                .replace(/\D/g, "");
+
+
+        const url =
+            "sms:" +
+            phone +
+            "?body=" +
+            encodeURIComponent(message);
+
+
+        window.location.href = url;
+
+    };
+
+}
+
+
+function closeSmsPopup() {
+
+    document.getElementById(
+        "smsPopup"
+    ).style.display = "none";
+
+}
+
+
+/* =========================================================
+   PRINT
+========================================================= */
+
+function prepareInvoicePrint(bill) {
+
+    document.getElementById("printShopName")
+        .textContent =
+        settings.businessName;
+
+    document.getElementById("printAddress")
+        .textContent =
+        settings.businessAddress;
+
+    document.getElementById("printOwner")
+        .textContent =
+        settings.ownerName;
+
+    document.getElementById("printPhone")
+        .textContent =
+        settings.ownerMobile;
+
+    document.getElementById("printInvoice")
+        .textContent =
+        bill.invoice;
+
+    document.getElementById("printDate")
+        .textContent =
+        formatDate(bill.date);
+
+    document.getElementById("printCustomer")
+        .textContent =
+        bill.customerName;
+
+    document.getElementById("printCustomerMobile")
+        .textContent =
+        bill.customerMobile;
+
+
+    document.getElementById("printProducts")
+        .innerHTML =
+        bill.products.map(product => {
+
+            return `
+                <tr>
+
+                    <td style="border:1px solid #000;padding:8px;">
+                        ${escapeHTML(product.name)}
+                    </td>
+
+                    <td style="border:1px solid #000;padding:8px;">
+                        ${product.qty}
+                    </td>
+
+                    <td style="border:1px solid #000;padding:8px;">
+                        ${money(product.price)}
+                    </td>
+
+                    <td style="border:1px solid #000;padding:8px;">
+                        ${money(product.qty * product.price)}
+                    </td>
+
+                </tr>
+            `;
+
+        }).join("");
+
+
+    document.getElementById("printSubtotal")
+        .textContent =
+        Number(bill.subtotal)
+            .toLocaleString("en-IN");
+
+
+    document.getElementById("printGST")
+        .textContent =
+        Number(bill.gst)
+            .toLocaleString("en-IN");
+
+
+    document.getElementById("printGrandTotal")
+        .textContent =
+        Number(bill.total)
+            .toLocaleString("en-IN");
+
+
+    document.getElementById("printPayment")
+        .textContent =
+        bill.paymentMethod;
+
+}
+
+
+function printCurrentBill() {
+
+    if (currentProducts.length === 0) {
+
+        alert(
+            "Please add products before printing."
+        );
+
+        return;
+    }
+
+
+    const totals =
+        calculateBill();
+
+
+    const bill = {
+
+        invoice:
+            document.getElementById(
+                "invoiceNumber"
+            ).textContent,
+
+        date:
+            document.getElementById(
+                "billDate"
+            ).value,
+
+        customerName:
+            document.getElementById(
+                "customerName"
+            ).value || "Walk-in Customer",
+
+        customerMobile:
+            document.getElementById(
+                "customerMobile"
+            ).value || "",
+
+        products:
+            currentProducts,
+
+        subtotal:
+            totals.subtotal,
+
+        gst:
+            totals.gstTotal,
+
+        total:
+            totals.grandTotal,
+
+        paymentMethod:
+            document.getElementById(
+                "paymentMethod"
+            ).value
+
+    };
+
+
+    prepareInvoicePrint(bill);
+
+    window.print();
+
+}
+
+
+/* =========================================================
+   SETTINGS
+========================================================= */
+
+function loadSettings() {
+
+    document.getElementById("businessName")
+        .value = settings.businessName;
+
+    document.getElementById("ownerName")
+        .value = settings.ownerName;
+
+    document.getElementById("ownerMobile")
+        .value = settings.ownerMobile;
+
+    document.getElementById("businessAddress")
+        .value = settings.businessAddress;
+
+
+    updateHeader();
+
+}
+
+
+function saveBusinessDetails() {
+
+    settings.businessName =
+        document.getElementById(
+            "businessName"
+        ).value.trim()
+        ||
+        defaultSettings.businessName;
+
+
+    settings.ownerName =
+        document.getElementById(
+            "ownerName"
+        ).value.trim()
+        ||
+        defaultSettings.ownerName;
+
+
+    settings.ownerMobile =
+        document.getElementById(
+            "ownerMobile"
+        ).value.trim()
+        ||
+        defaultSettings.ownerMobile;
+
+
+    settings.businessAddress =
+        document.getElementById(
+            "businessAddress"
+        ).value.trim()
+        ||
+        defaultSettings.businessAddress;
+
+
+    saveData();
+
+    updateHeader();
+
+    alert(
+        "Business details saved successfully."
+    );
+
+}
+
+
+function updateHeader() {
+
+    document.getElementById(
+        "headerBusinessName"
+    ).textContent =
+        settings.businessName;
+
+    document.getElementById(
+        "headerBusinessAddress"
+    ).textContent =
+        settings.businessAddress;
+
+    document.getElementById(
+        "headerOwnerName"
+    ).textContent =
+        settings.ownerName;
+
+    document.getElementById(
+        "headerOwnerMobile"
+    ).textContent =
+        settings.ownerMobile;
+
+}
+
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+function setDarkMode(enabled) {
+
+    document.body.classList.toggle(
+        "dark",
+        enabled
+    );
+
+    localStorage.setItem(
+        "bahiDarkMode",
+        enabled
+            ? "1"
+            : "0"
+    );
+
+    document.getElementById(
+        "darkModeToggle"
+    ).textContent =
+        enabled
+            ? "☀️"
+            : "🌙";
+
+}
+
+
+document.getElementById(
+    "darkModeToggle"
+).addEventListener(
+    "click",
+    function() {
+
+        setDarkMode(
+            !document.body.classList.contains(
+                "dark"
+            )
+        );
+
+    }
+);
+
+
+/* =========================================================
+   BACKUP
+========================================================= */
+
+function backupData() {
+
+    const backup = {
+
+        version: 1,
+
+        date:
+            new Date().toISOString(),
+
+        bills,
+
+        customers,
+
+        settings,
+
+        darkMode:
+            localStorage.getItem(
+                "bahiDarkMode"
+            )
+
+    };
+
+
+    const blob =
+        new Blob(
+            [
+                JSON.stringify(
+                    backup,
+                    null,
+                    2
+                )
+            ],
+            {
+                type: "application/json"
+            }
+        );
+
+
+    downloadBlob(
+        blob,
+        "bahi-bahi-backup.json"
+    );
+
+}
+
+
+function restoreData(event) {
+
+    const file =
+        event.target.files[0];
+
+    if (!file) return;
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload =
+        function(e) {
+
+            try {
+
+                const data =
+                    JSON.parse(
+                        e.target.result
+                    );
+
+
+                if (!data || !Array.isArray(data.bills)) {
+
+                    throw new Error(
+                        "Invalid backup file"
+                    );
+
+                }
+
+
+                bills =
+                    data.bills || [];
+
+                customers =
+                    data.customers || [];
+
+                settings = {
+                    ...defaultSettings,
+                    ...(data.settings || {})
+                };
+
+
+                saveData();
+
+                loadSettings();
+
+                renderAll();
+
+
+                alert(
+                    "Backup restored successfully."
+                );
+
+
+            } catch(error) {
+
+                alert(
+                    "Invalid backup file."
+                );
+
+            }
+
+        };
+
+
+    reader.readAsText(file);
+
+}
+
+
+function downloadBlob(blob, filename) {
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const a =
+        document.createElement("a");
+
+    a.href = url;
+
+    a.download = filename;
+
+    document.body.appendChild(a);
+
+    a.click();
+
+    a.remove();
+
+    URL.revokeObjectURL(url);
+
+}
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+function formatDate(date) {
+
+    if (!date) return "-";
+
+
+    const d =
+        new Date(date);
+
+
+    if (isNaN(d.getTime())) {
+        return "-";
+    }
+
+
+    return d.toLocaleString(
+        "en-IN",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit"
+        }
+    );
+
+}
+
+
+/* =========================================================
+   INITIALIZATION
+========================================================= */
+
+function renderAll() {
+
+    renderDashboard();
+
+    renderCustomers();
+
+    renderReports();
+
+}
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        const dark =
+            localStorage.getItem(
+                "bahiDarkMode"
+            ) === "1";
+
+
+        setDarkMode(dark);
+
+        loadSettings();
+
+        setBillDate();
+
+        document.getElementById(
+            "invoiceNumber"
+        ).textContent =
+            getNextInvoiceNumber();
+
+
+        renderProducts();
+
+        renderAll();
+
+    }
+);
+
+
+
+
+
+
+// =====================================================
+// OTP SHOW / HIDE
+// =====================================================
+
+const toggleOtp =
+    document.getElementById("toggleOtp");
+
+const otpInput =
+    document.getElementById("otpCode");
+
+toggleOtp.addEventListener("click", () => {
+
+    if (otpInput.type === "password") {
+
+        otpInput.type = "text";
+
+        toggleOtp.innerHTML =
+            '<i class="bx bx-hide"></i>';
+
+        toggleOtp.setAttribute(
+            "aria-label",
+            "Hide OTP"
+        );
+
+    } else {
+
+        otpInput.type = "password";
+
+        toggleOtp.innerHTML =
+            '<i class="bx bx-show"></i>';
+
+        toggleOtp.setAttribute(
+            "aria-label",
+            "Show OTP"
+        );
+
+    }
+
+});
+
+
+// =====================================================
+// CHANGE PHONE NUMBER
+// =====================================================
+
+const changePhoneBtn =
+    document.getElementById(
+        "changePhoneBtn"
+    );
+
+changePhoneBtn.addEventListener(
+    "click",
+    () => {
+
+        document
+            .getElementById("otpSection")
+            .style.display = "none";
+
+        document
+            .getElementById("phoneNumber")
+            .focus();
+
+        document
+            .getElementById("otpCode")
+            .value = "";
+
+        window.confirmationResult = null;
+
+    }
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>
